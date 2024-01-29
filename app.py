@@ -8,9 +8,10 @@
 import streamlit as st
 import numpy as np
 import pandas as pd
+from os.path import dirname,join,realpath
 
 # Load the dataset
-data = pd.read_csv('/kaggle/input/clean-kenyan-dataset/Clean_Kenya_Tourism_datasets (2).csv')
+data = pd.read_csv("V:\\my project\\kenya data\\New folder\\Clean_Kenya_Tourism_datasets (2).csv")
 
 # Cleaning the data
 # ... (Copy the data cleaning code from your original code)
