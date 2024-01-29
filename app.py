@@ -7,10 +7,6 @@
 # Importing the required libraries
 import streamlit as st
 import numpy as np
-from sklearn.model_selection import train_test_split
-from xgboost import XGBRegressor
-from sklearn.metrics import mean_absolute_error, mean_squared_error
-import matplotlib.pyplot as plt
 import pandas as pd
 
 # Load the dataset
