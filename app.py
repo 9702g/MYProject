@@ -226,7 +226,7 @@ first_trip_kenya = my_form.selectbox(
     "Is this your first trip to Kenya?", (0, 1), format_func=func
 )
 ​
-night_mainland = my_form.number_input(
+nights_stayed= my_form.number_input(
     "How many days you plan to spend in Kenya Mainland", min_value=0,
 )
 
