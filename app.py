@@ -2,6 +2,7 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
+import pickle
 
 ​
 ​
@@ -234,19 +235,18 @@ submit = my_form.form_submit_button(label="make prediction")
 ​
 ​
 # load the model and one-hot-encoder and scaler#####################################################
-​
-with open(
-    join("model/kenyan-tourism.ipynb")
 
-​
-with open(join(dirname(realpath(__file__)), "preprocessing/scaler.pkl"), "rb") as f:
-    scaler = joblib.load(f)
-​
-​
-with open(
-    join(dirname(realpath(__file__)), "preprocessing/one-hot-encoder.pkl"), "rb"
-) as f:
-    one_hot_encoder = joblib.load(f)
+
+
+
+filename = 'tourism-data.ipynb'
+
+# Open the file in read mode
+with open(filename, 'r') as file:
+    loaded_model = pickle.load(file)
+
+
+
 ​
 # result dictionary
 result_dic = {
@@ -302,11 +302,11 @@ if submit:
         "package_transport_int": package_accomodation,
         "package_accomodation": package_accomodation,
         "package_food": package_food,
-        "package_transport_tz": package_transport_tz,
+        "package_transport": package_transport_tz,
         "package_sightseeing": package_sightseeing,
         "package_guided_tour": package_guided_tour,
         "package_insurance": package_insurance,
-        "night_mainland": night_mainland,
+        "nights_stayed": night_mainland,
         "payment_mode": payment_mode,
         "first_trip_kenya": first_trip_kenya,
     }
