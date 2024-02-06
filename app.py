@@ -241,9 +241,14 @@ submit = my_form.form_submit_button(label="make prediction")
 
 filename = 'tourism-data.ipynb'
 
-# Open the file in read mode
-with open(filename, 'r') as file:
-    loaded_model = pickle.load(file)
+
+
+# Open the file in write binary mode and dump the model
+with open(filename, 'wb') as file:
+    pickle.dump(model, file)
+    
+loaded_model=pickle.load(open(filename,'rb'))
+loaded_model.predict(x_test)
 
 
 
