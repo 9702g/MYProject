@@ -1,26 +1,11 @@
 # import packages 
-
-
-
 import streamlit as st
 import pandas as pd
 import numpy as np
-import pickle
-
-​
-​
-# add banner image
 st.header("Kenya Tourism Expenditure Prediction")
-st.subheader(
-    """
-A simple machine learning app to predict how much money a tourist will spend when visiting Kenya.
-"""
-)
-​
-# form to collect Tourist information
+st.subheader("A simple machine learning app to predict how much money a tourist will spend when visiting Kenya.")
+​# form to collect Tourist information
 my_form = st.form(key="financial_form")
-​
-​
 @st.cache
 # function to trasform Yes and No options
 def func(value):
@@ -28,9 +13,7 @@ def func(value):
         return "Yes"
     else:
         return "No"
-​
-​
-country = my_form.selectbox(
+​country = my_form.selectbox(
     "select country",
     (
         "SWIZERLAND",
@@ -171,13 +154,11 @@ purpose = my_form.selectbox(
         "Scientific and Academic",
         "Other",
     ),
-)
-​
+)​
 total_number = my_form.number_input(
     "How many people are you are coming with in Kenya?", min_value=1
 )
-​
-main_activity = my_form.selectbox(
+​main_activity = my_form.selectbox(
     "What is the main activity you want to do when you are in Kenya?",
     (
         "Wildlife tourism",
@@ -233,16 +214,13 @@ nights_stayed= my_form.number_input(
     "How many days you plan to spend in Kenya Mainland", min_value=0,
 )
 
-​
 submit = my_form.form_submit_button(label="make prediction")​
 # load the model and one-hot-encoder and scaler####################################################
-
 filename = 'tourism-data.ipynb'
 # Open the file in write binary mode and dump the model
 with open(filename, 'wb') as file:
     pickle.dump(model, file)
-    
-loaded_model=pickle.load(open(filename,'rb'))
+    loaded_model=pickle.load(open(filename,'rb'))
 loaded_model.predict(x_test)
 # result dictionary
 result_dic = {
