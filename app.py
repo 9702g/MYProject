@@ -102,7 +102,7 @@ submit = my_form.form_submit_button(label="Make Prediction")
 
 # Load the model and one-hot-encoder and scaler
 with open(
-    join(dirname(realpath(__file__)), "model/histgradient-tanzania-tourism-model.pkl"),
+    join(dirname(realpath(__file__)), "model/tourism-data.pkl"),
     "rb",
 ) as f:
     model = joblib.load(f)
