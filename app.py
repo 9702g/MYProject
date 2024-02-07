@@ -106,7 +106,7 @@ submit = my_form.form_submit_button(label="Make Prediction")
 # Load the test data
 # Assuming you have the test data stored in a DataFrame named test_data
 # You need to replace test_data with your actual test data
-test_data = pd.read_csv('path_to_test_data.csv')
+
 
 # Load the XGBoost model from the pickle file
 with open('xgboost_model.pkl', 'rb') as f:
@@ -117,10 +117,10 @@ with open('xgboost_model.pkl', 'rb') as f:
 
 # Assuming you've preprocessed the test data and stored it in a DataFrame named test_data_processed
 # You need to replace test_data_processed with your actual preprocessed test data
-test_data_processed = preprocess_data(test_data)
+#test_data_processed = preprocess_data(test_data)
 
 # Make predictions using the loaded model
-predictions = model.predict(test_data_processed)
+#predictions = model.predict(test_data_processed)
 
 # Do something with the predictions, such as saving them to a file or displaying them
 
