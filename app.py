@@ -100,20 +100,8 @@ nights_stayed = my_form.number_input("How many days do you plan to spend in Keny
 submit = my_form.form_submit_button(label="Make Prediction")
 
 # Load the model and one-hot-encoder and scaler
-with open(
-    join(dirname(realpath(__file__)), "model/tourism-data.pkl"),
-    "rb",
-) as f:
-    model = joblib.load(f)
-
-with open(join(dirname(realpath(__file__)), "preprocessing/scaler.pkl"), "rb") as f:
-    scaler = joblib.load(f)
-
-
-with open(
-    join(dirname(realpath(__file__)), "preprocessing/one-hot-encoder.pkl"), "rb"
-) as f:
-    one_hot_encoder = joblib.load(f)
+with open('tourism-data.pkl', 'rb' as pickle_file:
+    loaded_model=pickle.load(pickle_file)
 
 # Result dictionary
 result_dic = {
