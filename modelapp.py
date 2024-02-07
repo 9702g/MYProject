@@ -9,7 +9,7 @@ from os.path import dirname, join, realpath
 st.header("Kenya Tourism Expenditure Prediction")
 st.subheader(
     """
-A simple machine learning app to predict how much money a tourist will spend when visiting Tanzania.
+A simple machine learning app to predict how much money a tourist will spend when visiting Kenya.
 """
 )
 
