@@ -4,7 +4,6 @@ import pandas as pd
 import numpy as np
 st.header("Kenya Tourism Expenditure Prediction")
 st.subheader("A simple machine learning app to predict how much money a tourist will spend when visiting Kenya.")
-​# form to collect Tourist information
 my_form = st.form(key="financial_form")
 @st.cache
 # function to trasform Yes and No options
