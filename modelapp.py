@@ -237,11 +237,16 @@ submit = my_form.form_submit_button(label="make prediction")
 
 # load the model and one-hot-encoder and scaler
 
-with open(
-    join(dirname(realpath(__file__)), "model/histgradient-kenya-tourism-model.pkl"),
-    "rb",
-) as f:
-    model = joblib.load(f)
+# Specify the path to the pickle file
+pkl_file_path = 'classifier.pkl'
+
+# Open the pickle file in read binary mode
+with open(pkl_file_path, 'rb') as file:
+    # Load the object from the pickle file
+    loaded_model = pickle.load(file)
+
+# Now you can use the loaded_model object as needed
+
 
 # result dictionary
 result_dic = {
