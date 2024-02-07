@@ -2,8 +2,7 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-from os.path import dirname, join, realpath
-
+import pickle
 
 # add banner image
 st.header("Kenya Tourism Expenditure Prediction")
@@ -18,7 +17,7 @@ my_form = st.form(key="financial_form")
 
 
 @st.cache
-# function to trasform Yes and No options
+# function to transform Yes and No options
 def func(value):
     if value == 1:
         return "Yes"
@@ -150,7 +149,7 @@ country = my_form.selectbox(
     ),
 )
 
-age_group = my_form.selectbox("Select you age range", ("1-24", "25-44", "45-64", "65+"))
+age_group = my_form.selectbox("Select your age range", ("1-24", "25-44", "45-64", "65+"))
 
 travel_with = my_form.selectbox(
     "Who do you plan to travel with?",
@@ -170,11 +169,11 @@ purpose = my_form.selectbox(
 )
 
 total_number = my_form.number_input(
-    "How many people are you are coming with in Tanzania?", min_value=1
+    "How many people are you traveling with in Tanzania?", min_value=1
 )
 
 main_activity = my_form.selectbox(
-    "What is the main activity you want to do when you are in Tanzania?",
+    "What is the main activity you want to do in Tanzania?",
     (
         "Wildlife tourism",
         "Cultural tourism",
@@ -183,13 +182,13 @@ main_activity = my_form.selectbox(
         "Conference tourism",
         "Hunting tourism",
         "Bird watching",
-        "business",
+        "Business",
         "Diving and Sport Fishing",
     ),
 )
 
 tour_arrangement = my_form.selectbox(
-    "How do your arrange your tour?", ("Independent", "Package Tour")
+    "How do you arrange your tour?", ("Independent", "Package Tour")
 )
 
 package_transport_int = my_form.selectbox(
@@ -198,12 +197,12 @@ package_transport_int = my_form.selectbox(
     format_func=func,
 )
 package_accomodation = my_form.selectbox(
-    "Does the package tour include Accomodation service?", (0, 1), format_func=func,
+    "Does the package tour include Accommodation service?", (0, 1), format_func=func,
 )
 package_food = my_form.selectbox(
     "Does the package tour include Food service?", (0, 1), format_func=func
 )
-package_transport = my_form.selectbox(
+package_transport_tz = my_form.selectbox(
     "Does the package tour include Local Transportation when you are in Tanzania?",
     (0, 1),
     format_func=func,
@@ -222,22 +221,20 @@ payment_mode = my_form.selectbox(
     ("Cash", "Credit Card", "Other", "Travellers Cheque"),
 )
 first_trip_tz = my_form.selectbox(
-    "Is this your first trip to kenya?", (0, 1), format_func=func
+    "Is this your first trip to Tanzania?", (0, 1), format_func=func
 )
 
 night_mainland = my_form.number_input(
-    "How many days you plan to spend in Kenya Mainland", min_value=0,
+    "How many days do you plan to spend in Tanzania Mainland?", min_value=0,
 )
 night_zanzibar = my_form.number_input(
-    "How many days you plan to spend in kenya", min_value=0
+    "How many days do you plan to spend in Tanzania Islands?", min_value=0
 )
 
-submit = my_form.form_submit_button(label="make prediction")
+submit = my_form.form_submit_button(label="Make Prediction")
 
 
-# load the model and one-hot-encoder and scaler
-
-# Specify the path to the pickle file
+# Load the model and one-hot-encoder and scaler
 pkl_file_path = 'histgradient-kenya-tourism-model (1).pkl'
 
 # Open the pickle file in read binary mode
@@ -245,22 +242,19 @@ with open(pkl_file_path, 'rb') as file:
     # Load the object from the pickle file
     loaded_model = pickle.load(file)
 
-# Now you can use the loaded_model object as needed
-
-
-# result dictionary
+# Result dictionary
 result_dic = {
-    1: " from ksh 0 to ksh 500,000",
-    2: "from ksh 500,001 to ksh 1,000,000",
-    3: "from ksh 1,000,001 to ksh 5,000,000",
-    4: "from ksh 5,000,001 to ksh 10,000,000",
-    5: "from ksh 10,000,001 and above",
+    1: "from Ksh 0 to Ksh 500,000",
+    2: "from Ksh 500,001 to Ksh 1,000,000",
+    3: "from Ksh 1,000,001 to Ksh 5,000,000",
+    4: "from Ksh 5,000,001 to Ksh 10,000,000",
+    5: "from Ksh 10,000,001 and above",
 }
 
 
 @st.cache
-# function to clean and tranform the input
-def preprocessing_data(data, one_hot_enc, scaler):
+# Function to clean and transform the input
+def preprocessing_data(data):
 
     # For other variables let's use one-hot-encoder
     multi_categorical_variables = [
@@ -272,26 +266,15 @@ def preprocessing_data(data, one_hot_enc, scaler):
         "main_activity",
         "payment_mode",
     ]
+    one_hot_encoded_data = pd.get_dummies(data, columns=multi_categorical_variables)
 
-    multi_categorical_data = data[multi_categorical_variables]
-
-    multi_categorical_data = one_hot_enc.transform(multi_categorical_data)
-
-    data = data.drop(multi_categorical_variables, axis=1)
-
-    data = data.to_numpy()
-
-    final_data = np.concatenate([data, multi_categorical_data], axis=1)
-
-    final_data = scaler.transform(final_data)
-
-    return final_data
+    return one_hot_encoded_data
 
 
 if submit:
 
-    # collect inputs
-    input = {
+    # Collect inputs
+    input_data = {
         "country": country,
         "age_group": age_group,
         "travel_with": travel_with,
@@ -312,21 +295,16 @@ if submit:
         "first_trip_tz": first_trip_tz,
     }
 
-    # create a dataframe
-    data = pd.DataFrame(input, index=[0])
+    # Create a dataframe
+    data = pd.DataFrame(input_data, index=[0])
 
-    # clean and transform input
-    transformed_data = preprocessing_data(
-        data=data, one_hot_enc=one_hot_encoder, scaler=scaler
-    )
+    # Clean and transform input
+    transformed_data = preprocessing_data(data=data)
 
-    # perform prediction
-    prediction = model.predict(transformed_data)
+    # Perform prediction
+    prediction = loaded_model.predict(transformed_data)
     output = int(prediction[0])
 
     # Display results of the Tourism prediction
     st.header("Results")
-    st.write(" You are expected to spend:{} ".format(result_dic[output]))
-
-
-
+    st.write("You are expected to spend: {}".format(result_dic[output]))
