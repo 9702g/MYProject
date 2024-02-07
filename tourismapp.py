@@ -12,8 +12,7 @@ def func(value):
         return "Yes"
     else:
         return "No"
-​country = my_form.selectbox(
-    "select country",
+​country = my_form.selectbox("select country",
     (
         "SWIZERLAND",
         "UNITED KINGDOM",
