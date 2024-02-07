@@ -1,10 +1,8 @@
 # import packages 
 import streamlit as st
-import joblib
 import pandas as pd
 import numpy as np
 from os.path import dirname, join, realpath
-import joblib
 
 
 # add banner image
@@ -244,15 +242,6 @@ with open(
     "rb",
 ) as f:
     model = joblib.load(f)
-
-with open(join(dirname(realpath(__file__)), "preprocessing/scaler.pkl"), "rb") as f:
-    scaler = joblib.load(f)
-
-
-with open(
-    join(dirname(realpath(__file__)), "preprocessing/one-hot-encoder.pkl"), "rb"
-) as f:
-    one_hot_encoder = joblib.load(f)
 
 # result dictionary
 result_dic = {
