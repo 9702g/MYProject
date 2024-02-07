@@ -3,7 +3,6 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import pickle
-import joblib 
 from os.path import dirname, join, realpath
 # Header
 st.header("Kenya Tourism Expenditure Prediction")
