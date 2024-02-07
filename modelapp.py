@@ -238,7 +238,7 @@ submit = my_form.form_submit_button(label="make prediction")
 # load the model and one-hot-encoder and scaler
 
 # Specify the path to the pickle file
-pkl_file_path = 'classifier.pkl'
+pkl_file_path = 'histgradient-kenya-tourism-model (1).pkl'
 
 # Open the pickle file in read binary mode
 with open(pkl_file_path, 'rb') as file:
