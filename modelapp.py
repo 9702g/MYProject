@@ -1,9 +1,9 @@
 import numpy as np
 import pandas as pd 
-from sklearn.model_selection import train_test_split
-from xgboost import XGBRegressor 
-from sklearn import metrics
+
 import streamlit as st
+
+
 data=pd.read_csv('Clean_Kenya_Tourism_datasets (2).csv')
 data['travel_with'] = data['travel_with'].replace(np.nan, 'Alone')
 #replacing the nan values in the total_female column of the training data with 1.0
