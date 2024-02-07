@@ -1,7 +1,4 @@
-Here's the corrected code with all the errors addressed:
 
-```python
-# import packages 
 import streamlit as st
 import pandas as pd
 import numpy as np
